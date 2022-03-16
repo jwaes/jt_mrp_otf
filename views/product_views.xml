@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="product_template_only_form_view">
+        <field name="name">product_template_form_view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales']" position="inside">
+                <group name="otf_bom" string="On-The-Fly BOM">
+                    <field name="otf_bom_list_price" />
+                    <button name="otf_btn_bom_list_price" string="Calculate sale price" type="object" attrs="{'invisible':[('otf_bom_list_price','=',False)]}"/>
+                </group>            
+            </xpath>
+        </field>
+    </record>        
+
+</odoo>
