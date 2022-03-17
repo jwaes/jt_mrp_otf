@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <xpath expr="//page[@name='sales']" position="inside">
                 <group name="otf_bom" string="On-The-Fly BOM">
+                    <field name="otf_bom_template" />
                     <field name="otf_bom_list_price" />
                     <button name="otf_btn_bom_list_price" string="Calculate sale price" type="object" attrs="{'invisible':[('otf_bom_list_price','=',False)]}"/>
                 </group>            

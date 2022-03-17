@@ -6,6 +6,8 @@ _logger = logging.getLogger(__name__)
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
+
+    otf_bom_template = fields.Many2one('otf.bom.template', string="OTF BOM template")
     otf_bom_list_price = fields.Boolean("BOM based sales price")
     otf_bom_list_price_updated_date = fields.Date('BOM price last calculated')
 

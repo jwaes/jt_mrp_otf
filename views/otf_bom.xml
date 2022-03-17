@@ -30,8 +30,12 @@
                 <sheet>
                     <group>
                         <field name="name" />
+                        <field name="categ_id"/>
                         <field name="subcontractor" />
                         <field name="sequence" />
+                    </group>
+                    <group>
+                        <button name="create_otf_bom_product" string="Create product from template" type="object"/>
                     </group>
                 </sheet>
             </form>
