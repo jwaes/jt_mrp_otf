@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_saleorder_document_inherit" name="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//tbody[@class='sale_tbody']/t[@t-foreach='doc.order_line']" position="inside">
+            <t t-if="line.product_template_id.otf_bom_list_price">
+                <t t-if="line.product_id.bom_count">
+                    <t t-foreach="line.product_id.bom_ids" t-as="bom">
+                        <!-- <tr class="bom">
+                            <td name="td_note_line" colspan="99">
+                                BOM for
+                                <span t-esc="bom.product_tmpl_id.name" />
+                            </td>
+                        </tr> -->
+                        <t t-set="bom_line_number" t-value="0" />
+                        <t t-foreach="bom.bom_line_ids" t-as="bom_line">
+                            <t t-set="bom_line_number" t-value="bom_line_number + 1" />
+                            <tr class="bom">
+                                <td name="td_name">
+                                    <t t-if="len(bom.bom_line_ids) == bom_line_number">└</t>
+                                    <t t-if="len(bom.bom_line_ids) != bom_line_number">├</t>
+                                    <span t-field="bom_line.product_id.name" />
+                                </td>
+                                <td name="td_quantity" class="text-right">
+                                    <span t-field="bom_line.product_qty" />
+                                    <span t-field="bom_line.product_uom_id.name" />
+                                </td>
+                                <td name="td_priceunit" class="text-right">
+                                    <span t-field="bom_line.product_id.list_price" />
+                                </td>
+                                <td t-if="display_discount" class="text-right"/>
+                                <td name="td_taxes" class="text-right"/>
+                                <td name="td_subtotal" class="text-right o_price_total"/>
+                            </tr>
+                            
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

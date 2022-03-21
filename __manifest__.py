@@ -17,13 +17,16 @@
     'version': '15.0.1.0.5',
 
     # any module necessary for this one to work correctly
-    'depends': ['mrp','mrp_subcontracting','stock'],
+    'depends': ['mrp','mrp_subcontracting','stock','project'],
 
     # always loaded
     'data': [
+        'report/sale_report_templates.xml',
         'security/ir.model.access.csv',
+        'views/mrp_bom_views.xml',
         'views/otf_bom.xml',
         'views/product_views.xml',
+        'views/project_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

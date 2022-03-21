@@ -9,6 +9,20 @@ class OtfBomTemplate(models.Model):
     sequence = fields.Many2one("ir.sequence", required=True)
     categ_id = fields.Many2one(
             'product.category', string='Product Category', required=True)
+    project_ids = fields.One2many('project.project', 'otf_bom_template_id', string="projects using this template")
+
+    def create_otf_bom_product_and_go(self):
+        bom = self.create_otf_bom_product()
+        view = self.env.ref("mrp.mrp_bom_form_view")
+        return {
+            "name": "BOM created",
+            "view_mode": "form",
+            "view_id": view.id,
+            "res_model": "mrp.bom",
+            "type": "ir.actions.act_window",
+            "res_id": bom.id,
+            "context": self.env.context,
+        }              
 
     def create_otf_bom_product(self):
         next_seq = self.sequence.next_by_code(self.sequence.code)
@@ -21,28 +35,28 @@ class OtfBomTemplate(models.Model):
             "otf_bom_template": self.id,
             "otf_bom_list_price": True,
         }
-        product_template = self.env["product.template"].create(product_vals)
+        product = self.env["product.product"].create(product_vals)
 
         supplier_vals = {
-            'product_tmpl_id': product_template.id,
+            'product_id': product.id,
+            'product_tmpl_id': product.product_tmpl_id.id,
             'name': self.subcontractor.id,
         }
         supplier_info = self.env['product.supplierinfo'].create(supplier_vals)
 
         bom_vals = {
-            'product_tmpl_id': product_template.id,
+            'product_id': product.id,
+            'product_tmpl_id': product.product_tmpl_id.id,
             'type': 'subcontract',
             'subcontractor_ids': [self.subcontractor.id],
         }
         bom = self.env['mrp.bom'].create(bom_vals)
 
-        view = self.env.ref("mrp.mrp_bom_form_view")
-        return {
-            "name": "BOM created",
-            "view_mode": "form",
-            "view_id": view.id,
-            "res_model": "mrp.bom",
-            "type": "ir.actions.act_window",
-            "res_id": bom.id,
-            "context": self.env.context,
-        }      
+        # add chatter
+        body = 'Created OTF BOM ' + bom.display_name
+        product.message_post(
+            body=body,
+            message_type='notification'
+        )
+        return bom
+    
