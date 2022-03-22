@@ -38,7 +38,8 @@ class ProductTemplate(models.Model):
                         lineprice = qty * prod_list_price
                         _logger.info("- %s * %s = %s", qty, prod_list_price, lineprice)
                         prc += lineprice
-                self.list_price = prc
+                self.list_price = prc                
+                self.otf_bom_list_price_updated_date = fields.Date.today()
             else :
                 _logger.warning("More than one BOM found")
 
