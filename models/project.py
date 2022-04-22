@@ -8,4 +8,3 @@ class Project(models.Model):
     _inherit = "project.project"
 
     otf_bom_template_id = fields.Many2one('otf.bom.template', string="related OTF BOM Template")
-

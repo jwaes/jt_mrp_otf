@@ -34,6 +34,7 @@ class OtfBomTemplate(models.Model):
             "categ_id": self.categ_id.id,
             "otf_bom_template": self.id,
             "otf_bom_list_price": True,
+            # "partner_id": self.task_id.partner_id.id,
         }
         product = self.env["product.product"].create(product_vals)
 
