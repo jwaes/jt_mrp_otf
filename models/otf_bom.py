@@ -1,4 +1,7 @@
+import logging
 from odoo import api, fields, models, _
+
+_logger = logging.getLogger(__name__)
 
 class OtfBomTemplate(models.Model):
     _name = 'otf.bom.template'
@@ -6,6 +9,8 @@ class OtfBomTemplate(models.Model):
 
     name = fields.Char("Name", required=True)
     subcontractor = fields.Many2one("res.partner", string="Subcontractor", required=True)
+    subcontractor_delay = fields.Integer("Delivery Lead Time", default=1)
+    dropship = fields.Boolean("Dropship", required=True, default=False)
     sequence = fields.Many2one("ir.sequence", required=True)
     categ_id = fields.Many2one(
             'product.category', string='Product Category', required=True)
@@ -27,6 +32,7 @@ class OtfBomTemplate(models.Model):
     def create_otf_bom_product(self):
         next_seq = self.sequence.next_by_code(self.sequence.code)
 
+
         product_vals = {
             "name": next_seq,
             "detailed_type": 'product',
@@ -36,12 +42,22 @@ class OtfBomTemplate(models.Model):
             "otf_bom_list_price": True,
             # "partner_id": self.task_id.partner_id.id,
         }
+
+        if self.dropship:
+            dropship_route = self.env['stock.location.route'].search([('name', '=', 'Dropship')])
+            buy_route = self.env['stock.location.route'].search([('name', '=', 'Buy')])
+            if dropship_route:
+                product_vals['route_ids'] = [buy_route.id, dropship_route.id]
+            else:
+                _logger.warning("Requested Dropship ... but dropship route not found ... is the option enabled ?")
+
         product = self.env["product.product"].create(product_vals)
 
         supplier_vals = {
             'product_id': product.id,
             'product_tmpl_id': product.product_tmpl_id.id,
             'name': self.subcontractor.id,
+            'delay': self.subcontractor_delay,
         }
         supplier_info = self.env['product.supplierinfo'].create(supplier_vals)
 
@@ -60,4 +76,3 @@ class OtfBomTemplate(models.Model):
             message_type='notification'
         )
         return bom
-    

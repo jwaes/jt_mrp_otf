@@ -14,13 +14,14 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'Manufacturing',
-    'version': '15.0.1.0.5',
+    'version': '15.0.1.0.6',
 
     # any module necessary for this one to work correctly
     'depends': ['mrp','mrp_subcontracting','stock','project'],
 
     # always loaded
     'data': [
+        'report/purchase_order_templates.xml',
         'report/sale_report_templates.xml',
         'security/ir.model.access.csv',
         'views/mrp_bom_views.xml',

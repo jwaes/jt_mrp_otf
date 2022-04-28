@@ -32,6 +32,8 @@
                         <field name="name" />
                         <field name="categ_id"/>
                         <field name="subcontractor" />
+                        <field name="subcontractor_delay"/>
+                        <field name="dropship"/>
                         <field name="sequence" />
                     </group>
                     <group>
