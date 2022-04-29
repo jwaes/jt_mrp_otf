@@ -33,7 +33,9 @@
                         <field name="categ_id"/>
                         <field name="subcontractor" />
                         <field name="subcontractor_delay"/>
+                        <field name="buy_route_id"/>
                         <field name="dropship"/>
+                        <field name="dropship_route_id" attrs="{'required':[('dropship','==', True)]}"/>
                         <field name="sequence" />
                     </group>
                     <group>
