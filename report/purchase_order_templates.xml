@@ -13,7 +13,7 @@
 
                 <t t-if="line.product_id.bom_count">
                     <t t-foreach="line.product_id.bom_ids" t-as="bom">
-                        <tr class="bom">
+                        <!-- <tr class="bom"> -->
                             <!-- <td name="td_note_line" colspan="99">
                                 BOM for
                                 <span t-esc="bom.product_tmpl_id.name" />
@@ -33,14 +33,17 @@
                                     </td>
                                     <td name="td_taxes" class="text-right"/>
                                     <td class="text-center">
-                                        <!-- <span t-field="line.date_planned"/> -->
+                                        <!-- no date_planned for bom items -->
                                     </td>                                    
                                     <td name="td_quantity" class="text-right">
                                         <span t-field="bom_line.product_qty" />
                                         <span t-field="bom_line.product_uom_id.name" />
                                     </td>
                                     <td name="td_priceunit" class="text-right">
-                                        <span t-field="bom_line.product_id.list_price" />
+                                        <!-- this is problematic with multiple prices for a seller -->
+                                        <t t-foreach="bom_line.product_id.seller_ids" t-as="seller">
+                                            <span t-field="seller.price" />
+                                        </t>
                                     </td>
                                     <td t-if="display_discount" class="text-right"/>
                                     
@@ -49,7 +52,7 @@
                                 
                             </t>
 
-                        </tr>
+                        <!-- </tr> -->
                     </t>
                 </t>                
 
