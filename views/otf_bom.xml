@@ -37,6 +37,8 @@
                         <field name="dropship"/>
                         <field name="dropship_route_id" attrs="{'required':[('dropship','==', True)]}"/>
                         <field name="sequence" />
+                        <field name="calculate_sale_price"/>
+                        <field name="calculate_purchase_price"/>
                     </group>
                     <group>
                         <button name="create_otf_bom_product_and_go" string="Create product from template" type="object"/>

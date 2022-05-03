@@ -20,6 +20,8 @@ class OtfBomTemplate(models.Model):
             'product.category', string='Product Category', required=True)
     project_ids = fields.One2many(
         'project.project', 'otf_bom_template_id', string="projects using this template")
+    calculate_sale_price = fields.Boolean(default=False)
+    calculate_purchase_price = fields.Boolean(default=False)
 
     def create_otf_bom_product_and_go(self):
         bom = self.create_otf_bom_product()
@@ -43,7 +45,8 @@ class OtfBomTemplate(models.Model):
             "default_code": next_seq,
             "categ_id": self.categ_id.id,
             "otf_bom_template": self.id,
-            "otf_bom_list_price": True,
+            "otf_bom_list_price": self.calculate_sale_price,
+            "otf_bom_supplier_price": self.calculate_purchase_price,
             # "partner_id": self.task_id.partner_id.id,
         }
 

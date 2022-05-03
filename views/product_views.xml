@@ -11,6 +11,7 @@
                     <field name="partner_id" />
                     <field name="otf_bom_template" />
                     <field name="otf_bom_list_price" />
+                    <field name="otf_bom_supplier_price" />
                     <button name="otf_btn_bom_list_price" string="Calculate sale price" type="object" attrs="{'invisible':[('otf_bom_list_price','=',False)]}"/>
                 </group>            
             </xpath>
