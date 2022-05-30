@@ -19,41 +19,46 @@
                                 <span t-esc="bom.product_tmpl_id.name" />
                             </td> -->
 
-                            <t t-set="bom_line_number" t-value="0" />
-                            <t t-foreach="bom.bom_line_ids" t-as="bom_line">
-                                <t t-set="bom_line_number" t-value="bom_line_number + 1" />
-                                <tr class="bom">
-                                    <td name="td_code" class="text-left text-monospace">
-                                        <span t-field="bom_line.product_id.code" />
-                                    </td>
-                                    <td name="td_name" class="pl-4 text-monospace">
-                                        <t t-if="len(bom.bom_line_ids) == bom_line_number">└</t>
-                                        <t t-if="len(bom.bom_line_ids) != bom_line_number">├</t>
-                                        <span t-field="bom_line.product_id.name" />
-                                    </td>
-                                    <td name="td_taxes" class="text-right"/>
-                                    <td class="text-center">
-                                        <!-- no date_planned for bom items -->
-                                    </td>                                    
-                                    <td name="td_quantity" class="text-right">
-                                        <span t-field="bom_line.product_qty" />
-                                        <span t-field="bom_line.product_uom_id.name" />
-                                    </td>
-                                    <td name="td_priceunit" class="text-right">
-                                        <t t-if="line.product_id.otf_bom_supplier_price">
-                                            <!-- this is problematic with multiple prices for a seller -->
-                                            <t t-foreach="bom_line.product_id.seller_ids" t-as="seller">
-                                                <span t-field="seller.price" />
-                                            </t>                                            
-                                        </t>
-                                    </td>
-                                    <td t-if="display_discount" class="text-right"/>
-                                    
-                                    <td name="td_subtotal" class="text-right"/>
-                                </tr>
+                            <t t-if="line.product_id == bom.product_id">
                                 
-                            </t>
+                                <t t-set="bom_line_number" t-value="0" />
+                                <t t-foreach="bom.bom_line_ids" t-as="bom_line">
+                                    <t t-set="bom_line_number" t-value="bom_line_number + 1" />
+                                    <tr class="bom">
+                                        <td name="td_code" class="text-left text-monospace">
+                                            <span t-field="bom_line.product_id.code" />
+                                        </td>
+                                        <td name="td_name" class="pl-4 text-monospace">
+                                            <t t-if="len(bom.bom_line_ids) == bom_line_number">└</t>
+                                            <t t-if="len(bom.bom_line_ids) != bom_line_number">├</t>
+                                            <span t-field="bom_line.product_id.display_name" />
+                                        </td>
+                                        <td name="td_taxes" class="text-right"/>
+                                        <td class="text-center">
+                                            <!-- no date_planned for bom items -->
+                                        </td>                                    
+                                        <td name="td_quantity" class="text-right">
+                                            <span t-field="bom_line.product_qty" />
+                                            <span t-field="bom_line.product_uom_id.name" />
+                                        </td>
+                                        <td name="td_priceunit" class="text-right">
+                                            <t t-if="line.product_id.otf_bom_supplier_price">
+                                                <!-- this is problematic with multiple prices for a seller -->
+                                                <t t-foreach="bom_line.product_id.seller_ids" t-as="seller">
+                                                    <span t-field="seller.price" />
+                                                </t>                                            
+                                            </t>
+                                        </td>
+                                        <td t-if="display_discount" class="text-right"/>
+                                        
+                                        <td name="td_subtotal" class="text-right"/>
+                                    </tr>
+                                    
+                                </t>
 
+
+
+                            </t>
                         <!-- </tr> -->
                     </t>
                 </t>                
