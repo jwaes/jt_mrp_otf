@@ -31,7 +31,7 @@
                                         <td name="td_name" class="pl-4 text-monospace">
                                             <t t-if="len(bom.bom_line_ids) == bom_line_number">└</t>
                                             <t t-if="len(bom.bom_line_ids) != bom_line_number">├</t>
-                                            <span t-field="bom_line.product_id.display_name" />
+                                            <span t-field="bom_line.product_id.short_name" />
                                         </td>
                                         <td name="td_taxes" class="text-right"/>
                                         <td class="text-center">
