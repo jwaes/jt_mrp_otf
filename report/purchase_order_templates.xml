@@ -9,9 +9,16 @@
             <td name="td_code" class="text-monospace"><span t-field="line.product_id.code"/></td>
         </xpath>
 
+        <xpath expr="//td[@id='product']" position="inside">
+            <div t-if="line.product_id.bom_count and line.product_id.otf_bom_template" class="small mt-2">
+                <span class="border-top">Bill of Materials:</span>
+            </div>
+        </xpath>
+
         <xpath expr="//tbody/t[@t-foreach='o.order_line']" position="inside">
 
                 <t t-if="line.product_id.bom_count and line.product_id.otf_bom_template">
+                    
                     <t t-foreach="line.product_id.bom_ids" t-as="bom">
                         <!-- <tr class="bom"> -->
                             <!-- <td name="td_note_line" colspan="99">

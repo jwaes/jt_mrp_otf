@@ -26,7 +26,7 @@ class MrpBom(models.Model):
 
                 for bom_line in record.bom_line_ids:
                     line_product = bom_line.product_id
-                    _logger.info("BOM line %s", line_product.name)
+                    _logger.info("BOM line [%s] %s", line_product.default_code, line_product.name)
                     qty = bom_line.product_qty
 
                     if product.otf_bom_list_price:
@@ -65,6 +65,8 @@ class MrpBom(models.Model):
                     if old_list_price != new_list_price:
                         body += '<p>Sale price has changed from {:.2f} to {:.2f}.</p>'.format(
                             old_list_price, new_list_price)
+                    else :
+                        _logger.info('Nothing to update')
                 else :
                     _logger.info('Not updating sale price')
 
@@ -76,6 +78,8 @@ class MrpBom(models.Model):
                         if old_purchase_price != new_purchase_price:
                             body += '<p>Purchase price has changed from {:.2f} to {:.2f}.</p>'.format(
                                 old_purchase_price, new_purchase_price)
+                        else :
+                            _logger.info('Nothing to update')                                
                 else :
                     _logger.info('Not updating purchase price')                        
 
