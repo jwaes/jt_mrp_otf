@@ -24,10 +24,13 @@
                             <!-- <td name="td_note_line" colspan="99">
                                 BOM for
                                 <span t-esc="bom.product_tmpl_id.name" />
+                                subco: <t t-esc="o.partner_id"/> and subcos <t t-esc="bom.subcontractor_ids"/>
+                                <t t-if="o.partner_id in bom.subcontractor_ids">
+                                    inside subco
+                                </t>
                             </td> -->
 
-                            <t t-if="line.product_id == bom.product_id">
-                                
+                            <t t-if="line.product_id == bom.product_id and o.partner_id in bom.subcontractor_ids">
                                 <t t-set="bom_line_number" t-value="0" />
                                 <t t-foreach="bom.bom_line_ids" t-as="bom_line">
                                     <t t-set="bom_line_number" t-value="bom_line_number + 1" />
