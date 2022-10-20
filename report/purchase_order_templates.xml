@@ -29,7 +29,7 @@
                                 <t t-if="o.partner_id in bom.subcontractor_ids">
                                     inside subco
                                 </t> -->
-                                !!! Quantities listed below are to produce <t t-esc="bom.product_qty"/> <t t-esc="bom.product_uom_id.name"/>
+                                !!! Quantities listed below are to produce <span t-field="bom.product_qty"/> <span t-field="bom.product_uom_id.name"/>
                             </td>
                             <td name="td_taxes"/>
                             <td name="td_date_planned" />                                 
