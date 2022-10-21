@@ -20,25 +20,27 @@
                 <t t-if="line.product_id.bom_count and line.product_id.otf_bom_template">
                     
                     <t t-foreach="line.product_id.bom_ids" t-as="bom">
-                        <tr class="bom" t-if="bom.product_qty != 1">
-                            <td name="td_code"/>
-                            <td name="td_name">
-                                <!-- BOM for
-                                <span t-esc="bom.product_tmpl_id.name" />
-                                subco: <t t-esc="o.partner_id"/> and subcos <t t-esc="bom.subcontractor_ids"/>
-                                <t t-if="o.partner_id in bom.subcontractor_ids">
-                                    inside subco
-                                </t> -->
-                                !!! Quantities listed below are to produce <span t-field="bom.product_qty"/> <span t-field="bom.product_uom_id.name"/>
-                            </td>
-                            <td name="td_taxes"/>
-                            <td name="td_date_planned" />                                 
-                            <td name="td_quantity"/>        
-                            <td name="td_priceunit" />
-                            <td t-if="display_discount" />
-                            <td name="td_subtotal"/>                            
-                        </tr>
                             <t t-if="line.product_id == bom.product_id and o.partner_id in bom.subcontractor_ids">
+
+                                <tr class="bom" t-if="bom.product_qty != 1">
+                                    <td name="td_code"/>
+                                    <td name="td_name">
+                                        <!-- BOM for
+                                        <span t-esc="bom.product_tmpl_id.name" />
+                                        subco: <t t-esc="o.partner_id"/> and subcos <t t-esc="bom.subcontractor_ids"/>
+                                        <t t-if="o.partner_id in bom.subcontractor_ids">
+                                            inside subco
+                                        </t> -->
+                                        !!! Quantities listed below are to produce <span t-field="bom.product_qty"/> <span t-field="bom.product_uom_id.name"/>
+                                    </td>
+                                    <td name="td_taxes"/>
+                                    <td name="td_date_planned" />                                 
+                                    <td name="td_quantity"/>        
+                                    <td name="td_priceunit" />
+                                    <td t-if="display_discount" />
+                                    <td name="td_subtotal"/>                            
+                                </tr>
+                                                                
                                 <t t-set="bom_line_number" t-value="0" />
                                 <t t-foreach="bom.bom_line_ids" t-as="bom_line">
                                     <t t-set="bom_line_number" t-value="bom_line_number + 1" />
