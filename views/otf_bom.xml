@@ -38,6 +38,7 @@
                         <field name="dropship_route_id" attrs="{'required':[('dropship','==', True)]}"/>
                         <field name="sequence" />
                         <field name="calculate_sale_price"/>
+                        <field name="pricelist_id"/>
                         <field name="calculate_purchase_price"/>
                     </group>
                     <group>

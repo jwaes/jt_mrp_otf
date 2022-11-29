@@ -30,7 +30,11 @@ class MrpBom(models.Model):
                     qty = bom_line.product_qty
 
                     if product.otf_bom_list_price:
-                        sale_price = line_product.list_price
+                        # sale_price = line_product.list_price
+
+                        pricelist = product.otf_bom_template.pricelist_id
+                        sale_price = pricelist.get_product_price(line_product, qty, None)
+
                         sale_line_price = qty * sale_price
                         _logger.info(
                             "Sale - {:.2f} * {:.2f} = {:.2f}".format(qty, sale_price, sale_line_price))

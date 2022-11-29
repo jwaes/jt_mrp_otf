@@ -8,6 +8,11 @@ class OtfBomTemplate(models.Model):
     _name = 'otf.bom.template'
     _description = 'OTF BOM Template'
 
+    def _default_pricelist_id(self):
+        return self.env['product.pricelist'].search([
+            '|', ('company_id', '=', False),
+            ('company_id', '=', self.env.company.id)], limit=1)
+
     name = fields.Char("Name", required=True)
     subcontractor = fields.Many2one(
         "res.partner", string="Subcontractor", required=True)
@@ -22,6 +27,9 @@ class OtfBomTemplate(models.Model):
         'project.project', 'otf_bom_template_id', string="projects using this template")
     calculate_sale_price = fields.Boolean(default=False)
     calculate_purchase_price = fields.Boolean(default=False)
+    pricelist_id = fields.Many2one('product.pricelist', 'Pricelist', required=True, default=_default_pricelist_id)
+
+
 
     def create_otf_bom_product_and_go(self):
         bom = self.create_otf_bom_product()
