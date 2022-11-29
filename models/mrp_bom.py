@@ -39,19 +39,18 @@ class MrpBom(models.Model):
                     if product.otf_bom_supplier_price:
                         purchase_price = 0.0
                         if line_product.seller_ids is not None:
-                            if len(line_product.seller_ids) > 1:
-                                raise Exception(
-                                    'Found multiple sellers for this product, do not know how to handle this', bom_product)
+
+                            seller = line_product._select_seller(
+                                uom_id=bom_line.product_uom_id)
+
+                            if product.otf_bom_template.subcontractor.id == seller.name.id:
+                                purchase_price = seller.price
+                                purchase_line_price = qty * purchase_price
+                                _logger.info(
+                                    "Purchase - {:.2f} * {:.2f} = {:.2f}".format(qty, purchase_price, purchase_line_price))
+                                new_purchase_price += purchase_line_price                                    
                             else:
-                                for seller in line_product.seller_ids:
-                                    if product.otf_bom_template.subcontractor.id == seller.name.id:
-                                        purchase_price = seller.price
-                                        purchase_line_price = qty * purchase_price
-                                        _logger.info(
-                                            "Purchase - {:.2f} * {:.2f} = {:.2f}".format(qty, purchase_price, purchase_line_price))
-                                        new_purchase_price += purchase_line_price                                    
-                                    else:
-                                        _logger.info("Seller %s, is not the subcontractor %s, skipping", seller.name.name, product.otf_bom_template.subcontractor.name )
+                                _logger.info("Seller %s, is not the subcontractor %s, skipping", seller.name.name, product.otf_bom_template.subcontractor.name )
                         else:
                             raise Exception(
                                 'Product has no seller associated', product)
