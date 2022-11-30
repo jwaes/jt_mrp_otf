@@ -33,12 +33,12 @@
                                         </t> -->
                                         !!! Quantities listed below are to produce <span t-field="bom.product_qty"/> <span t-field="bom.product_uom_id.name"/>
                                     </td>
-                                    <td name="td_taxes"/>
+                                    <td name="td_taxes" />
                                     <td name="td_date_planned" />                                 
                                     <td name="td_quantity"/>        
                                     <td name="td_priceunit" />
                                     <td t-if="display_discount" />
-                                    <td name="td_subtotal"/>                            
+                                    <td name="td_subtotal" />                            
                                 </tr>
                                                                 
                                 <t t-set="bom_line_number" t-value="0" />
@@ -62,12 +62,7 @@
                                             <span t-field="bom_line.product_uom_id.name" />
                                         </td>
                                         <td name="td_priceunit" class="text-right">
-                                            <t t-if="line.product_id.otf_bom_supplier_price">
-                                                <!-- this is problematic with multiple prices for a seller -->
-                                                <t t-foreach="bom_line.product_id.seller_ids" t-as="seller">
-                                                    <span t-field="seller.price" />
-                                                </t>                                            
-                                            </t>
+           
                                         </td>
                                         <td t-if="display_discount" class="text-right"/>
                                         

@@ -24,6 +24,9 @@ class MrpBom(models.Model):
                     for seller in product.seller_ids:
                             old_purchase_price = seller.price            
 
+
+                sale_log_lines = ""
+                purchase_log_lines = ""
                 for bom_line in record.bom_line_ids:
                     line_product = bom_line.product_id
                     _logger.info("BOM line [%s] %s", line_product.default_code, line_product.name)
@@ -36,8 +39,10 @@ class MrpBom(models.Model):
                         sale_price = pricelist.get_product_price(line_product, qty, None)
 
                         sale_line_price = qty * sale_price
-                        _logger.info(
-                            "Sale - {:.2f} * {:.2f} = {:.2f}".format(qty, sale_price, sale_line_price))
+
+                        sale_log_lines += "<tr><td>[{}]</td><td>{:.2f}</td><td>{}</td><td>{:.2f}</td><td>{:.2f}</td></tr>".format(line_product.default_code, qty, bom_line.product_uom_id.name,  sale_price, sale_line_price)
+                        _logger.info("Sale - {:.2f} * {:.2f} = {:.2f}".format(qty, sale_price, sale_line_price))
+
                         new_list_price += sale_line_price
 
                     if product.otf_bom_supplier_price:
@@ -50,8 +55,10 @@ class MrpBom(models.Model):
                             if product.otf_bom_template.subcontractor.id == seller.name.id:
                                 purchase_price = seller.price
                                 purchase_line_price = qty * purchase_price
-                                _logger.info(
-                                    "Purchase - {:.2f} * {:.2f} = {:.2f}".format(qty, purchase_price, purchase_line_price))
+
+                                purchase_log_lines += "<tr><td>[{}]</td><td>{:.2f}</td><td>{}</td><td>{:.2f}</td><td>{:.2f}</td></tr>".format(line_product.default_code, qty, bom_line.product_uom_id.name, purchase_price, purchase_line_price)
+                                _logger.info("Purchase - {:.2f} * {:.2f} = {:.2f}".format(qty, purchase_price, purchase_line_price))
+
                                 new_purchase_price += purchase_line_price                                    
                             else:
                                 _logger.info("Seller %s, is not the subcontractor %s, skipping", seller.name.name, product.otf_bom_template.subcontractor.name )
@@ -59,15 +66,15 @@ class MrpBom(models.Model):
                             raise Exception(
                                 'Product has no seller associated', product)
 
-
                 body = ''
 
                 if product.otf_bom_list_price:
                     _logger.info('Updating sale price')                
                     product.list_price = new_list_price
                     if old_list_price != new_list_price:
-                        body += '<p>Sale price has changed from {:.2f} to {:.2f}.</p>'.format(
+                        body += '<h6>Sales</h6><p>Sale price has changed from {:.2f} to {:.2f}.</p>'.format(
                             old_list_price, new_list_price)
+                        body += '<table class="table"><thead><tr><th>Product</th><th>Qty</th><th>UoM</th><th>Price</th><th>Total</th></tr></thead><tbody>' + sale_log_lines + '<tr><td colspan="4"></td><td>{:.2f}</td></tr></tbody></table>'.format(new_list_price)
                     else :
                         _logger.info('Nothing to update')
                 else :
@@ -79,8 +86,9 @@ class MrpBom(models.Model):
                         # product.seller_ids.price = product_purchase_price
                         seller.price = new_purchase_price
                         if old_purchase_price != new_purchase_price:
-                            body += '<p>Purchase price has changed from {:.2f} to {:.2f}.</p>'.format(
+                            body += '<h6>Purchase</h6><p>Purchase price has changed from {:.2f} to {:.2f}.</p>'.format(
                                 old_purchase_price, new_purchase_price)
+                            body += '<table class="table"><thead><tr><th>Product</th><th>Qty</th><th>UoM</th><th>Price</th><th>Total</th></tr></thead><tbody>' + purchase_log_lines + '<tr><td colspan="4"></td><td>{:.2f}</td></tr></tbody></table>'.format(new_purchase_price)
                         else :
                             _logger.info('Nothing to update')                                
                 else :

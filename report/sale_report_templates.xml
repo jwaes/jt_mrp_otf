@@ -29,7 +29,7 @@
                                     <span t-field="bom_line.product_uom_id.name" />
                                 </td>
                                 <td name="td_priceunit" class="text-right">
-                                    <span t-field="bom_line.product_id.list_price" />
+                                    
                                 </td>
                                 <td t-if="display_discount" class="text-right"/>
                                 <td name="td_taxes" class="text-right"/>
