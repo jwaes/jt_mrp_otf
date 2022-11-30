@@ -33,6 +33,7 @@ class OtfBomTemplate(models.Model):
         _logger.info("Going to update them all")
         templates = self.env['product.template'].search([('otf_bom_template', '=', self.id),])
         for tmpl in templates:
+            _logger.info("[%s] %s", tmpl.default_code, tmpl.name)
             tmpl._compute_otf_bom_list_price()
 
     def create_otf_bom_product_and_go(self):
