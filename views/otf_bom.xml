@@ -43,6 +43,7 @@
                     </group>
                     <group>
                         <button name="create_otf_bom_product_and_go" string="Create product from template" type="object"/>
+                        <button name="update_related_products" string="Update all products" type="object"/>
                     </group>
                 </sheet>
             </form>

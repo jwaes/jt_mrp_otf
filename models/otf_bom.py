@@ -29,7 +29,11 @@ class OtfBomTemplate(models.Model):
     calculate_purchase_price = fields.Boolean(default=False)
     pricelist_id = fields.Many2one('product.pricelist', 'Pricelist', required=True, default=_default_pricelist_id)
 
-
+    def update_related_products(self):
+        _logger.info("Going to update them all")
+        templates = self.env['product.template'].search([('otf_bom_template', '=', self.id),])
+        for tmpl in templates:
+            tmpl._compute_otf_bom_list_price()
 
     def create_otf_bom_product_and_go(self):
         bom = self.create_otf_bom_product()
