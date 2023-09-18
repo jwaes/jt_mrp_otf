@@ -109,3 +109,12 @@ class MrpBom(models.Model):
         super().write(vals)
         self.update_prices()
         return True
+
+class MrpBomLine(models.Model):
+    _inherit = 'mrp.bom.line'    
+
+    def skip_bom_line(self, product):
+        # _logger.info(product._name)
+        # _logger.info(self.bom_product_template_attribute_value_ids)
+        # _logger.info(product._match_all_variant_values(self.bom_product_template_attribute_value_ids))
+        return self._skip_bom_line(product)
