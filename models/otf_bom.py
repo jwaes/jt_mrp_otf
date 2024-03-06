@@ -17,9 +17,9 @@ class OtfBomTemplate(models.Model):
     subcontractor = fields.Many2one(
         "res.partner", string="Subcontractor", required=True)
     subcontractor_delay = fields.Integer("Delivery Lead Time", default=1)
-    buy_route_id = fields.Many2one("stock.location.route", required=True)
+    buy_route_id = fields.Many2one("stock.route", required=True)
     dropship = fields.Boolean("Dropship", required=True, default=False)
-    dropship_route_id = fields.Many2one("stock.location.route")
+    dropship_route_id = fields.Many2one("stock.route")
     sequence = fields.Many2one("ir.sequence", required=True)
     categ_id = fields.Many2one(
             'product.category', string='Product Category', required=True)
