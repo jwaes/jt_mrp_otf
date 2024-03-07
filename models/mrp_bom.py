@@ -36,7 +36,7 @@ class MrpBom(models.Model):
                         # sale_price = line_product.list_price
 
                         pricelist = product.otf_bom_template.pricelist_id
-                        sale_price = pricelist.get_product_price(line_product, qty, None)
+                        sale_price = pricelist._get_product_price(line_product, quantity=qty)
 
                         sale_line_price = round(qty * sale_price, 2)
 
