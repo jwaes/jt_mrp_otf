@@ -52,7 +52,7 @@ class MrpBom(models.Model):
                             seller = line_product._select_seller(
                                 uom_id=bom_line.product_uom_id)
 
-                            if product.otf_bom_template.subcontractor.id == seller.name.id:
+                            if product.otf_bom_template.subcontractor.id == seller.partner_id.id:
                                 purchase_price = seller.price
 
                                 purchase_line_price = round(qty * purchase_price, 2)
@@ -62,7 +62,7 @@ class MrpBom(models.Model):
 
                                 new_purchase_price += purchase_line_price                                    
                             else:
-                                _logger.info("Seller %s, is not the subcontractor %s, skipping", seller.name.name, product.otf_bom_template.subcontractor.name )
+                                _logger.warning("Seller %s, is not the subcontractor %s, skipping", seller.partner_id.name, product.otf_bom_template.subcontractor.name )
                         else:
                             raise Exception(
                                 'Product has no seller associated', product)
