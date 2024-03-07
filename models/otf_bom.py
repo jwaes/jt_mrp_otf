@@ -78,7 +78,7 @@ class OtfBomTemplate(models.Model):
         supplier_vals = {
             'product_id': product.id,
             'product_tmpl_id': product.product_tmpl_id.id,
-            'name': self.subcontractor.id,
+            'partner_id': self.subcontractor.id,
             'delay': self.subcontractor_delay,
         }
         supplier_info = self.env['product.supplierinfo'].create(supplier_vals)
