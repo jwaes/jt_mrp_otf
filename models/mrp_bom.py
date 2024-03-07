@@ -102,6 +102,7 @@ class MrpBom(models.Model):
                 if body != '':
                     product.message_post(
                         body=body,
+                        body_is_html=True,
                         message_type='notification'
                         )
 
