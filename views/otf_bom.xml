@@ -30,11 +30,12 @@
           <group>
             <field name="name" />
             <field name="categ_id" />
-            <field name="subcontractor" />
-            <field name="subcontractor_delay" />
-            <field name="buy_route_id" />
-            <field name="dropship" />
-            <field name="dropship_route_id" required="dropship == True" />
+            <field name="manufacturing_type"/>
+            <field name="subcontractor" attrs="{'required':[('manufacturing_type','==','subcontracting')], 'invisible':[('manufacturing_type','!=','subcontracting')]}" />
+            <field name="subcontractor_delay" attrs="{'invisible':[('manufacturing_type','!=', 'subcontracting')]}" />
+            <field name="dropship" attrs="{'invisible':[('manufacturing_type','!=', 'subcontracting')]}" />
+            <field name="dropship_route_id" attrs="{'invisible':[('manufacturing_type','!=', 'subcontracting')]}"/>
+            <field name="buy_route_id" />            
             <field name="sequence" />
             <field name="calculate_sale_price" />
             <field name="pricelist_id" />

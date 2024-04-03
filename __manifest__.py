@@ -17,7 +17,7 @@
     'version': '2.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['mrp','mrp_subcontracting','stock','project','jt_sale_order_line_codecolumn'],
+    'depends': ['mrp','mrp_subcontracting','stock','project', 'purchase', 'jt_sale_order_line_codecolumn','stock_dropshipping'],
 
     # always loaded
     'data': [

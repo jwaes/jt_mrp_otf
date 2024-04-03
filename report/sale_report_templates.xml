@@ -2,7 +2,7 @@
 <odoo>
 
     <template id="report_saleorder_document_inherit" name="report_saleorder_document" inherit_id="sale.report_saleorder_document">
-        <xpath expr="//tbody[hasclass('sale_tbody')]/t[@t-foreach='lines_to_report']" position="inside">
+        <xpath expr="//tbody[hasclass('sale_tbody')]/t[@t-foreach='doc.order_line']" position="inside">
             <t t-if="line.product_template_id.otf_bom_list_price">
                 <t t-if="line.product_id.bom_count">
                     <t t-foreach="line.product_id.bom_ids" t-as="bom">

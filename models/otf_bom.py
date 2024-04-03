@@ -14,8 +14,12 @@ class OtfBomTemplate(models.Model):
             ('company_id', '=', self.env.company.id)], limit=1)
 
     name = fields.Char("Name", required=True)
+    manufacturing_type = fields.Selection([
+        ('subcontracting', 'subcontracting'),
+        ('manufcaturing', 'manufacturing')
+    ], required=True, default='subcontracting', string='Manufacturing Type')
     subcontractor = fields.Many2one(
-        "res.partner", string="Subcontractor", required=True)
+        "res.partner", string="Subcontractor" )
     subcontractor_delay = fields.Integer("Delivery Lead Time", default=1)
     buy_route_id = fields.Many2one("stock.location.route", required=True)
     dropship = fields.Boolean("Dropship", required=True, default=False)
@@ -61,6 +65,7 @@ class OtfBomTemplate(models.Model):
             "otf_bom_list_price": self.calculate_sale_price,
             "otf_bom_supplier_price": self.calculate_purchase_price,
             # "partner_id": self.task_id.partner_id.id,
+            'route_ids': [self.buy_route_id.id],
         }
 
         if self.dropship:
@@ -75,20 +80,29 @@ class OtfBomTemplate(models.Model):
 
         product = self.env["product.product"].create(product_vals)
 
-        supplier_vals = {
-            'product_id': product.id,
-            'product_tmpl_id': product.product_tmpl_id.id,
-            'name': self.subcontractor.id,
-            'delay': self.subcontractor_delay,
-        }
-        supplier_info = self.env['product.supplierinfo'].create(supplier_vals)
+
 
         bom_vals = {
             'product_id': product.id,
             'product_tmpl_id': product.product_tmpl_id.id,
-            'type': 'subcontract',
-            'subcontractor_ids': [self.subcontractor.id],
+            'type': 'normal',
         }
+
+        if self.manufacturing_type == 'subcontracting':
+            supplier_vals = {
+                'product_id': product.id,
+                'product_tmpl_id': product.product_tmpl_id.id,
+                'name': self.subcontractor.id,
+                'delay': self.subcontractor_delay,
+            }
+            supplier_info = self.env['product.supplierinfo'].create(supplier_vals)         
+
+            bom_vals.update({
+                'type': 'subcontract',
+                'subcontractor_ids': [self.subcontractor.id],
+            })   
+
+
         bom = self.env['mrp.bom'].create(bom_vals)
 
         # add chatter
