@@ -24,6 +24,8 @@ class OtfBomTemplate(models.Model):
     buy_route_id = fields.Many2one("stock.location.route", required=True)
     dropship = fields.Boolean("Dropship", required=True, default=False)
     dropship_route_id = fields.Many2one("stock.location.route")
+    picker_vendor = fields.Many2one(
+        "res.partner", string="Picker vendor" )    
     sequence = fields.Many2one("ir.sequence", required=True)
     categ_id = fields.Many2one(
             'product.category', string='Product Category', required=True)
@@ -94,13 +96,25 @@ class OtfBomTemplate(models.Model):
                 'product_tmpl_id': product.product_tmpl_id.id,
                 'name': self.subcontractor.id,
                 'delay': self.subcontractor_delay,
+                'sequence': 10,
             }
             supplier_info = self.env['product.supplierinfo'].create(supplier_vals)         
 
             bom_vals.update({
                 'type': 'subcontract',
                 'subcontractor_ids': [self.subcontractor.id],
-            })   
+            })
+
+        if self.picker_vendor:
+            supplier_vals = {
+                'product_id': product.id,
+                'product_tmpl_id': product.product_tmpl_id.id,
+                'name': self.picker_vendor.id,
+                'delay':2,
+                'sequence': 5,
+            }
+            supplier_info = self.env['product.supplierinfo'].create(supplier_vals)               
+
 
 
         bom = self.env['mrp.bom'].create(bom_vals)

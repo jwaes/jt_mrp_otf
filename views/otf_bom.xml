@@ -35,6 +35,7 @@
             <field name="subcontractor_delay" attrs="{'invisible':[('manufacturing_type','!=', 'subcontracting')]}" />
             <field name="dropship" attrs="{'invisible':[('manufacturing_type','!=', 'subcontracting')]}" />
             <field name="dropship_route_id" attrs="{'invisible':[('manufacturing_type','!=', 'subcontracting')]}"/>
+            <field name="picker_vendor"/>
             <field name="buy_route_id" />            
             <field name="sequence" />
             <field name="calculate_sale_price" />
