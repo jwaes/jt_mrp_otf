@@ -16,12 +16,10 @@
                         <t t-foreach="bom.bom_line_ids" t-as="bom_line">
                             <t t-set="bom_line_number" t-value="bom_line_number + 1" />
                             <tr class="bom">
-                                <td name="td_code" class="text-left text-monospace">
-                                    <span t-field="bom_line.product_id.code" />
-                                </td>
                                 <td name="td_name" class="pl-4 text-monospace">
                                     <t t-if="len(bom.bom_line_ids) == bom_line_number">└</t>
                                     <t t-if="len(bom.bom_line_ids) != bom_line_number">├</t>
+                                    [<span t-field="bom_line.product_id.code" />]
                                     <span t-field="bom_line.product_id.name" />
                                 </td>
                                 <td name="td_quantity" class="text-right">
