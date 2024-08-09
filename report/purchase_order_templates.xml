@@ -5,7 +5,8 @@
         priority="60">
 
         <xpath expr="//td[@id='product']" position="inside">
-            <div t-if="line.product_id.bom_count and line.product_id.otf_bom_template"
+            <div t-if="line.product_id.bom_count and line.product_id.otf_bom_template
+                and o.partner_id in line.product_id.bom_ids.subcontractor_ids"
                 class="small mt-2">
                 <span class="border-top">Bill of Materials:</span>
             </div>
