@@ -1,0 +1,25 @@
+tr.bom {
+    td:first-child {
+        div {
+            padding-left: 4;
+            border-left: 2px solid #0ff;
+            margin-left: 1em;            
+        }
+
+        div::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -2px;
+            bottom: 50%;
+            width: 0.75em;
+            border: 2px solid #0f0;
+            border-top: 0 none transparent;
+            border-right: 0 none transparent;
+        }
+    }
+}
+
+tr.bom:last-child(1 of .bom) div {
+    border-left: 2px solid transparent;
+}

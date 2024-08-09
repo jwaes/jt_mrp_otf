@@ -33,6 +33,11 @@
         'views/product_views.xml',
         'views/project_views.xml',
     ],
+    'assets': {
+        'web.report_assets_common': [
+            'jt_mrp_otf/static/src/scss/bom_report.scss',
+        ],
+    },    
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',

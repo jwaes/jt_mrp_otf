@@ -55,11 +55,14 @@
 
                                     <t t-set="bom_line_number" t-value="bom_line_number + 1" />
                                     <tr class="bom">
-                                        <td name="td_name" class="pl-4 text-monospace">
-                                            <t t-if="len(bom.bom_line_ids) == bom_line_number">└</t>
-                                            <t t-if="len(bom.bom_line_ids) != bom_line_number">├</t>
+                                        <td name="td_name" class="text-monospace">
+                                            <div>
+                                            <!-- <t t-if="len(bom.bom_line_ids) == bom_line_number">└</t>
+                                            <t t-if="len(bom.bom_line_ids) != bom_line_number">├</t> -->
                                             [<span t-field="bom_line.product_id.code" />]
-                                            <span t-field="bom_line.product_id.name" />                                            
+                                            <span t-field="bom_line.product_id.name" />    
+                                            
+                                            </div>                                            
                                         </td>
                                         <td name="td_taxes" class="text-end" />
                                         <td class="text-center">
