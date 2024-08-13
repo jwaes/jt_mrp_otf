@@ -5,12 +5,12 @@ tr.bom {
     }
 
     td:first-child {
-        
+
         height: 2em;
 
         div {
             padding-left: 1em;
-            border-left: 2px solid var(--bs-gray);
+            border-left: 2px solid map-get($grays, '300');
             margin-left: 1em;            
             position: relative
         }
@@ -22,7 +22,7 @@ tr.bom {
             left: -2px;
             bottom: 100%;
             width: 0.75em;
-            border: 2px solid var(--bs-gray);
+            border: 2px solid map-get($grays, '300');
             border-top: 0 none transparent;
             border-right: 0 none transparent;
             padding-top: 0.5em;
