@@ -1,15 +1,16 @@
 tr.bom {
     td {
-        padding: 0;
+        padding-top: 0;
+        padding-bottom: 0;
     }
 
     td:first-child {
-
-        padding: 0;
+        
+        height: 2em;
 
         div {
             padding-left: 1em;
-            border-left: 2px solid $o-default-report-secondary-color;
+            border-left: 2px solid var(--bs-gray);
             margin-left: 1em;            
             position: relative
         }
@@ -21,7 +22,7 @@ tr.bom {
             left: -2px;
             bottom: 100%;
             width: 0.75em;
-            border: 2px solid $o-default-report-secondary-color;
+            border: 2px solid var(--bs-gray);
             border-top: 0 none transparent;
             border-right: 0 none transparent;
             padding-top: 0.5em;
