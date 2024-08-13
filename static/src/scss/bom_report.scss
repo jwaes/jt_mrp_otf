@@ -20,7 +20,7 @@ tr.bom {
             content: '';
             position: absolute;
             top: 0;
-            left: 0px;
+            left: -2px;
             bottom: 100%;
             width: 0.75em;
             border: 2px solid map-get($grays, '300');
