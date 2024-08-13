@@ -12,14 +12,15 @@ tr.bom {
             padding-left: 1em;
             border-left: 2px solid map-get($grays, '300');
             margin-left: 1em;            
-            position: relative
+            position: relative;
+            height: 100%;
         }
 
         div::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -2px;
+            left: 0px;
             bottom: 100%;
             width: 0.75em;
             border: 2px solid map-get($grays, '300');
