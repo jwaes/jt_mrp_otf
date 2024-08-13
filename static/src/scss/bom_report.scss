@@ -1,7 +1,8 @@
 tr.bom {
     td:first-child {
+
         div {
-            padding-left: 4px;
+            padding-left: 1em;
             border-left: 2px solid #00f;
             margin-left: 1em;            
             position: relative
@@ -12,11 +13,12 @@ tr.bom {
             position: absolute;
             top: 0;
             left: -2px;
-            bottom: 50%;
+            bottom: 100%;
             width: 0.75em;
-            border: 2px solid #00f;
+            border: 2px solid var(--o-border-color);
             border-top: 0 none transparent;
             border-right: 0 none transparent;
+            padding-top: 0.5em;
         }
 
         div.closing {

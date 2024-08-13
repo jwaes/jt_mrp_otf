@@ -56,7 +56,7 @@
                                     <t t-set="bom_line_number" t-value="bom_line_number + 1" />
                                     <tr class="bom">
                                         <td name="td_name" class="text-monospace">
-                                            <div t-attf-class="{{ (len(bom.bom_line_ids) == bom_line_number) ? 'closing' }}">
+                                            <div t-attf-class="{{ (len(bom.bom_line_ids) == bom_line_number) ? 'closing' : '' }}">
                                             <!-- <t t-if="len(bom.bom_line_ids) == bom_line_number">└</t>
                                             <t t-if="len(bom.bom_line_ids) != bom_line_number">├</t> -->
                                             [<span t-field="bom_line.product_id.code" />]
