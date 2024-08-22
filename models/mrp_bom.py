@@ -1,4 +1,5 @@
 import logging
+from markupsafe import Markup
 from odoo import api, fields, models, tools
 
 _logger = logging.getLogger(__name__)
@@ -101,8 +102,7 @@ class MrpBom(models.Model):
                 # add chatter
                 if body != '':
                     product.message_post(
-                        body=body,
-                        body_is_html=True,
+                        body=Markup(body),
                         message_type='notification'
                         )
 
