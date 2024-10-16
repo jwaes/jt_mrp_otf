@@ -55,6 +55,7 @@ class MrpBom(models.Model):
 
                             if product.otf_bom_template.subcontractor.id == seller.partner_id.id:
                                 purchase_price = seller.price
+                                product.standard_price = purchase_price
 
                                 purchase_line_price = round(qty * purchase_price, 2)
 
