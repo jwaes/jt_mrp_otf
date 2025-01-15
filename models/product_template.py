@@ -18,6 +18,7 @@ class ProductTemplate(models.Model):
     otf_bom_list_price_updated_date = fields.Date('BOM price last calculated')
 
     otf_bom_supplier_price = fields.Boolean(default=False)
+    otf_bom_supplier_services_only = fields.Boolean(default=False)
     otf_bom_supplier_price_updated_date = fields.Date()
 
     @api.depends('list_price', 'price_extra')

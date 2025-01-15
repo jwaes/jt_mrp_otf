@@ -49,22 +49,29 @@ class MrpBom(models.Model):
                     if product.otf_bom_supplier_price:
                         purchase_price = 0.0
                         if line_product.seller_ids is not None:
+                            
+                            process_line = True
+                            if product.otf_bom_supplier_services_only:
+                                if not line_product.type == 'service':
+                                    process_line = False
+                                    _logger.warning("Product %s, is not a service,  skipping", line_product.name )
 
-                            seller = line_product._select_seller(
-                                uom_id=bom_line.product_uom_id)
+                            if process_line: 
+                                seller = line_product._select_seller(
+                                    uom_id=bom_line.product_uom_id)
 
-                            if product.otf_bom_template.subcontractor.id == seller.partner_id.id:
-                                purchase_price = seller.price
-                                product.standard_price = purchase_price
+                                if product.otf_bom_template.subcontractor.id == seller.partner_id.id:
+                                    purchase_price = seller.price
+                                    product.standard_price = purchase_price
 
-                                purchase_line_price = round(qty * purchase_price, 2)
+                                    purchase_line_price = round(qty * purchase_price, 2)
 
-                                purchase_log_lines += "<tr><td>[{}]</td><td>{:.2f} {}</td><td class='text-end'>{:.2f}</td><td class='text-end'>{:.2f}</td></tr>".format(line_product.default_code, qty, bom_line.product_uom_id.name, purchase_price, purchase_line_price)
-                                _logger.info("Purchase - {:.2f} * {:.2f} = {:.2f}".format(qty, purchase_price, purchase_line_price))
+                                    purchase_log_lines += "<tr><td>[{}]</td><td>{:.2f} {}</td><td class='text-end'>{:.2f}</td><td class='text-end'>{:.2f}</td></tr>".format(line_product.default_code, qty, bom_line.product_uom_id.name, purchase_price, purchase_line_price)
+                                    _logger.info("Purchase - {:.2f} * {:.2f} = {:.2f}".format(qty, purchase_price, purchase_line_price))
 
-                                new_purchase_price += purchase_line_price                                    
-                            else:
-                                _logger.warning("Seller %s, is not the subcontractor %s, skipping", seller.partner_id.name, product.otf_bom_template.subcontractor.name )
+                                    new_purchase_price += purchase_line_price                                    
+                                else:
+                                        _logger.warning("Seller %s, is not the subcontractor %s, skipping", seller.partner_id.name, product.otf_bom_template.subcontractor.name )
                         else:
                             raise Exception(
                                 'Product has no seller associated', product)

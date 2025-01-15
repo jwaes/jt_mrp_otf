@@ -27,6 +27,7 @@ class OtfBomTemplate(models.Model):
         'project.project', 'otf_bom_template_id', string="projects using this template")
     calculate_sale_price = fields.Boolean(default=False)
     calculate_purchase_price = fields.Boolean(default=False)
+    calculate_purchase_services_only = fields.Boolean(default=False)
     pricelist_id = fields.Many2one('product.pricelist', 'Pricelist', required=True, default=_default_pricelist_id)
 
     def update_related_products(self):
@@ -60,6 +61,7 @@ class OtfBomTemplate(models.Model):
             "otf_bom_template": self.id,
             "otf_bom_list_price": self.calculate_sale_price,
             "otf_bom_supplier_price": self.calculate_purchase_price,
+            "otf_bom_supplier_services_only": self.calculate_purchase_services_only,
             # "partner_id": self.task_id.partner_id.id,
         }
 
