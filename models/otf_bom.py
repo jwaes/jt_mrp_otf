@@ -55,7 +55,8 @@ class OtfBomTemplate(models.Model):
 
         product_vals = {
             "name": next_seq,
-            "detailed_type": 'product',
+            "type": 'consu',
+            "is_storable": True,
             "default_code": next_seq,
             "categ_id": self.categ_id.id,
             "otf_bom_template": self.id,
