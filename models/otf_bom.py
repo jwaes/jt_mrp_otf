@@ -50,6 +50,11 @@ class OtfBomTemplate(models.Model):
             "context": self.env.context,
         }
 
+    @api.model
+    def has_variant_code_template_field(self):
+        product_template_model = self.env['product.template']
+        return 'variant_code_template' in product_template_model._fields
+
     def create_otf_bom_product(self):
         next_seq = self.sequence.next_by_code(self.sequence.code)
 
@@ -65,6 +70,9 @@ class OtfBomTemplate(models.Model):
             "otf_bom_supplier_services_only": self.calculate_purchase_services_only,
             # "partner_id": self.task_id.partner_id.id,
         }
+
+        if self.has_variant_code_template_field:
+            product_vals['variant_code_template'] = next_seq
 
         if self.dropship:
             _logger.info(
